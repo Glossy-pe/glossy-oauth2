@@ -1,0 +1,349 @@
+{
+  "info": {
+    "name": "OAuth 2.0 Server",
+    "description": "Collection for testing OAuth 2.0 Authorization Server",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "OAuth Endpoints",
+      "item": [
+        {
+          "name": "Get OpenID Configuration",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/.well-known/openid-configuration",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": [".well-known", "openid-configuration"]
+            }
+          }
+        },
+        {
+          "name": "Get JWK Set",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/oauth2/jwks",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["oauth2", "jwks"]
+            }
+          }
+        },
+        {
+          "name": "Token - Client Credentials",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "secret",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "public-client",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                },
+                {
+                  "key": "scope",
+                  "value": "read write",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:9000/oauth2/token",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["oauth2", "token"]
+            }
+          }
+        },
+        {
+          "name": "Token - Authorization Code",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "secret",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "public-client",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code",
+                  "type": "text"
+                },
+                {
+                  "key": "code",
+                  "value": "PASTE_CODE_HERE",
+                  "type": "text"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "http://127.0.0.1:8080/authorized",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:9000/oauth2/token",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["oauth2", "token"]
+            }
+          }
+        },
+        {
+          "name": "Token - Refresh Token",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "secret",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "public-client",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "refresh_token",
+                  "type": "text"
+                },
+                {
+                  "key": "refresh_token",
+                  "value": "PASTE_REFRESH_TOKEN_HERE",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:9000/oauth2/token",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["oauth2", "token"]
+            }
+          }
+        },
+        {
+          "name": "Introspect Token",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "secret",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "public-client",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "token",
+                  "value": "PASTE_TOKEN_HERE",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:9000/oauth2/introspect",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["oauth2", "introspect"]
+            }
+          }
+        },
+        {
+          "name": "Revoke Token",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "secret",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "public-client",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "token",
+                  "value": "PASTE_TOKEN_HERE",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:9000/oauth2/revoke",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["oauth2", "revoke"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "API Endpoints",
+      "item": [
+        {
+          "name": "Public Endpoint",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/api/public",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["api", "public"]
+            }
+          }
+        },
+        {
+          "name": "User Endpoint (Protected)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "PASTE_ACCESS_TOKEN_HERE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/api/user",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["api", "user"]
+            }
+          }
+        },
+        {
+          "name": "Admin Endpoint (Protected)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "PASTE_ACCESS_TOKEN_HERE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/api/admin",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9000",
+              "path": ["api", "admin"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
