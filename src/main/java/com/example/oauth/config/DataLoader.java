@@ -2,6 +2,7 @@ package com.example.oauth.config;
 
 import com.example.oauth.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -13,18 +14,29 @@ public class DataLoader implements CommandLineRunner {
 
     private final UserService userService;
 
+    @Value("${APP_USER_USERNAME}")
+    private String username;
+
+    @Value("${APP_USER_PASSWORD}")
+    private String password;
+
+    @Value("${APP_USER_EMAIL}")
+    private String email;
+
     @Override
     public void run(String... args) {
         try {
-            // Create test users
-            userService.createUser("user", "password", "user@example.com", Set.of("USER"));
-            System.out.println("Created user: user / password");
-            
-            userService.createUser("admin", "admin", "admin@example.com", Set.of("USER", "ADMIN"));
-            System.out.println("Created user: admin / admin");
-            
+            userService.createUser(
+                    username,
+                    password,
+                    email,
+                    Set.of("USER")
+            );
+
+            System.out.println("Created user from ENV: " + username);
+
         } catch (RuntimeException e) {
-            System.out.println("Users already exist, skipping creation");
+            System.out.println("User already exists, skipping creation");
         }
     }
 }
