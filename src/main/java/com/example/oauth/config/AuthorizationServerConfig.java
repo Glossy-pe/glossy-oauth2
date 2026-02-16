@@ -5,6 +5,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -42,6 +43,9 @@ import java.util.UUID;
 @Configuration
 @EnableWebSecurity
 public class AuthorizationServerConfig {
+
+    @Value("${GLOSSY_OAUTH_SERVER}")
+    private String oauth_url;
 
     @Bean
     @Order(1)
@@ -122,9 +126,9 @@ public class AuthorizationServerConfig {
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 // ⚠️ Actualizar estas URLs según tu aplicación cliente
-                .redirectUri("https://glossy-oauth2-server.mimarca.pe/login/oauth2/code/public-client")
-                .redirectUri("https://glossy-oauth2-server.mimarca.pe/authorized")
-                .postLogoutRedirectUri("https://glossy-oauth2-server.mimarca.pe/logged-out")
+                .redirectUri(oauth_url + "/login/oauth2/code/public-client")
+                .redirectUri(oauth_url + "/authorized")
+                .postLogoutRedirectUri(oauth_url + "/logged-out")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
                 .scope(OidcScopes.EMAIL)
@@ -177,7 +181,7 @@ public class AuthorizationServerConfig {
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder()
-                .issuer("https://glossy-oauth2-server.mimarca.pe") // ⚠️ Cambiar aquí
+                .issuer(oauth_url) // ⚠️ Cambiar aquí
                 .build();
     }
 
